@@ -14,6 +14,18 @@ const Signup = () => {
     setOTP(otp)
     if (otp.length === 6) {
       console.log("OTP is 6", otp)
+      // we need to verify the OTP
+      let confirmationResult = window.confirmationResult
+      confirmationResult
+        .confirm(otp)
+        .then((result) => {
+          console.log("Sent otp to google")
+          const user = result.user
+          console.log(user)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 
