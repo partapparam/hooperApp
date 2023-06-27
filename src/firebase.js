@@ -23,9 +23,5 @@ const app = initializeApp(firebaseConfig)
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app)
-window.recaptchaVerifier = new RecaptchaVerifier(
-  "recaptcha-container",
-  {},
-  auth
-)
+
 export default app

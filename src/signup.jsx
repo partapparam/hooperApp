@@ -5,10 +5,11 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth"
 import { auth } from "./firebase"
+import firebase from "firebase"
 
 const Signup = () => {
   const navigate = useNavigate()
-  const appVerifier = window.recaptchaVerifier
+  let verify = new firebase.auth.RecaptchaVerifier("sign-in-button")
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -16,7 +17,7 @@ const Signup = () => {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    await signInWithPhoneNumber(auth, "3462738722", appVerifier)
+    await signInWithPhoneNumber(auth, "3462738722", verify)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
