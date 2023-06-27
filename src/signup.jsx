@@ -1,49 +1,57 @@
 import React, { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import {
-  createUserWithEmailAndPassword,
-  signInWithPhoneNumber,
-} from "firebase/auth"
-import { auth } from "./firebase"
-import firebase from "firebase"
+import { authentication } from "./firebase"
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
 
 const Signup = () => {
-  const navigate = useNavigate()
-  let verify = new firebase.auth.RecaptchaVerifier("sign-in-button")
+  // const navigate = useNavigate()
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [OTP, setOTP] = useState("")
+  const [expandForm, setExpandForm] = useState(false)
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const verifyOTP = (event) => {
+    let otp = event.target.value
+    setOTP(otp)
+    if (otp.length === 6) {
+      console.log("OTP is 6", otp)
+    }
+  }
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
+  const generateRecaptcha = () => {
+    // setting a global verifier for out app
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      "sign-in-button",
+      {
+        size: "invisible",
+        callback: (response) => {
+          // reCATCHA solver
+          console.log("Response from auth, ", response)
+        },
+      },
+      authentication
+    )
+  }
 
-    await signInWithPhoneNumber(auth, "3462738722", verify)
-      .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult
-        // ...
-      })
-      .catch((error) => {
-        // Error; SMS not sent
-        // ...
-      })
+  const requestOTP = (event) => {
+    event.preventDefault()
+    if (phoneNumber.length >= 10) {
+      setExpandForm(true)
+      generateRecaptcha()
+      const appVerifier = window.recaptchaVerifier
+      signInWithPhoneNumber(authentication, phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          console.log(confirmationResult)
+          window.confirmationResult = confirmationResult
+        })
+        .catch((err) => {
+          console.log("Err with phone number signin", err)
+        })
+    }
+  }
 
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user
-        console.log(user)
-        // navigate("/login")
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorCode, errorMessage)
-        alert(errorMessage)
-        // ..
-      })
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    setPhoneNumber(event.target.value)
   }
 
   return (
@@ -52,34 +60,38 @@ const Signup = () => {
         <div>
           <div>
             <h1> Hooper </h1>
-            <form>
-              <div>
-                <label htmlFor="email-address">Email address</label>
+            <form onSubmit={requestOTP}>
+              <h1>Sign in with phone Number</h1>
+              <div className="m-2">
+                <label htmlFor="phoneNumberInput">Phone</label>
                 <input
-                  type="email"
-                  label="Email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  placeholder="Email address"
+                  type="tel"
+                  id="phoneNumberInput"
+                  value={phoneNumber}
+                  onChange={handleSubmit}
                 />
               </div>
-
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  label="Create password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder="Password"
-                />
-              </div>
-
-              <button type="submit" onClick={onSubmit}>
+              {expandForm === true ? (
+                <>
+                  <div className="p-2 bg-red-200">
+                    <label htmlFor="otpInput">OTP</label>
+                    <input
+                      type="number"
+                      id="otpInput"
+                      value={OTP}
+                      onChange={verifyOTP}
+                    />
+                    <div id="otpHelp">Please enter the one time pin</div>
+                  </div>
+                </>
+              ) : null}
+              {expandForm === false ? (
+                <button type="submit">Request OTP</button>
+              ) : null}
+              <div id="sign-in-button"></div>
+              {/* <button type="submit" onClick={onSubmit}>
                 Sign up
-              </button>
+              </button> */}
             </form>
 
             <p>

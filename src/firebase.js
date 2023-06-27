@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
-import { getAuth, RecaptchaVerifier } from "firebase/auth"
+import { getAuth } from "firebase/auth"
 // import { getAnalytics } from "firebase/analytics"
 
 // Other SDKs for Firebase products
@@ -22,6 +22,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 // Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app)
+export const authentication = getAuth(app)
 
 export default app
