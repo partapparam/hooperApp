@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import { authentication } from "./firebase/firebase"
+import { authentication } from "../firebase/firebase"
+import { memo } from "react"
 import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
@@ -141,4 +142,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default memo(Signup)

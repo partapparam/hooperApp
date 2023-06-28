@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 // import Home from "./page/Home"
-import Signup from "./signup"
+import Signup from "./pages/signup"
 // import Login from "./page/Login"
 import { BrowserRouter as Router } from "react-router-dom"
 import { Routes, Route } from "react-router-dom"
