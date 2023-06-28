@@ -1,7 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import { authentication } from "./firebase"
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
+import { authentication } from "./firebase/firebase"
+import {
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  onAuthStateChanged,
+} from "firebase/auth"
 
 const Signup = () => {
   // const navigate = useNavigate()
@@ -70,6 +74,22 @@ const Signup = () => {
     event.preventDefault()
     setPhoneNumber(event.target.value)
   }
+
+  useEffect(() => {
+    onAuthStateChanged(authentication, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid
+        // ...
+        console.log("uid", uid)
+      } else {
+        // User is signed out
+        // ...
+        console.log("user is logged out")
+      }
+    })
+  }, [])
 
   return (
     <div>
