@@ -26,6 +26,9 @@ const Signup = () => {
         .catch((err) => {
           console.log(err)
         })
+        .finally(() => {
+          setExpandForm(false)
+        })
     }
   }
 
@@ -48,11 +51,13 @@ const Signup = () => {
     event.preventDefault()
     if (phoneNumber.length >= 10) {
       setExpandForm(true)
-      generateRecaptcha()
+      if (!window.recaptchaVerifier) {
+        generateRecaptcha()
+        console.log("Recaptcha Does not exist so we generate. Request OTP")
+      }
       const appVerifier = window.recaptchaVerifier
       signInWithPhoneNumber(authentication, phoneNumber, appVerifier)
         .then((confirmationResult) => {
-          console.log(confirmationResult)
           window.confirmationResult = confirmationResult
         })
         .catch((err) => {
