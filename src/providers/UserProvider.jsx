@@ -18,6 +18,7 @@ export const UserProvider = ({ children }) => {
         // ...
         console.log("uid", uid)
         setIsLoggedIn(true)
+        setUser(user.uid)
       } else {
         // User is signed out
         // TODO - Handle with RequiredAuth
@@ -26,7 +27,7 @@ export const UserProvider = ({ children }) => {
     })
   })
 
-  const logout = () => {
+  const signout = () => {
     signOut(authentication)
       .then(() => {
         console.log("Loogged out")
@@ -37,7 +38,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, user, logout }}>
+    <UserContext.Provider value={{ isLoggedIn, user, signout }}>
       {children}
     </UserContext.Provider>
   )

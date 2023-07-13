@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 import { authentication } from "../firebase/firebase"
 import { memo } from "react"
-import {
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth"
+import { useAuth } from "../hooks/useAuth"
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
 
 const Signup = () => {
   // const navigate = useNavigate()
   const [phoneNumber, setPhoneNumber] = useState("")
   const [OTP, setOTP] = useState("")
   const [expandForm, setExpandForm] = useState(false)
+  const { isLoggedIn, user, signout } = useAuth()
 
   const verifyOTP = (event) => {
     let otp = event.target.value
@@ -78,31 +75,14 @@ const Signup = () => {
   }
 
   useEffect(() => {
-    onAuthStateChanged(authentication, (user) => {
-      console.log("auth state changed")
-      if (user) {
-        console.log(user)
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid
-        // ...
-        console.log("uid", uid)
-      } else {
-        // User is signed out
-        // ...
-        console.log("user is logged out")
-      }
-    })
-  }, [])
+    if (isLoggedIn) {
+      console.log("user exists")
+      console.log(user)
+    }
+  }, [isLoggedIn, user])
 
-  const logOut = () => {
-    signOut(authentication)
-      .then(() => {
-        console.log("Loogged out")
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+  const signOutUser = () => {
+    signout()
   }
 
   return (
@@ -146,7 +126,7 @@ const Signup = () => {
             </form>
 
             <p>
-              <button onClick={logOut}>sign out</button>
+              <button onClick={signOutUser}>sign out</button>
               Already have an account? <NavLink to="/login">Sign in</NavLink>
             </p>
           </div>
