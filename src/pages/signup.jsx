@@ -6,6 +6,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth"
 
 const Signup = () => {
@@ -94,6 +95,16 @@ const Signup = () => {
     })
   }, [])
 
+  const logOut = () => {
+    signOut(authentication)
+      .then(() => {
+        console.log("Loogged out")
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return (
     <div>
       <section>
@@ -135,6 +146,7 @@ const Signup = () => {
             </form>
 
             <p>
+              <button onClick={logOut}>sign out</button>
               Already have an account? <NavLink to="/login">Sign in</NavLink>
             </p>
           </div>
