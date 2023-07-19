@@ -19,17 +19,16 @@ const token = firebase
     console.log(error)
   })
 
+axiosClient.defaults.headers.common["Authorization"] = "test"
 axiosClient.interceptors.request.use(
   (config) => {
-    // Get user from Firebase
-    const user = ""
-    console.log("logging token in interceptor", token)
-    if (user) {
-      config.headers.Authorization = token
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token
     }
     return config
   },
   (error) => {
+    // Do something with request error
     return Promise.reject(error)
   }
 )
