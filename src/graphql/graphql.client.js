@@ -11,10 +11,10 @@ import { createClient } from "graphql-ws"
 
 // the app must have an Http connection as well as WS Connection to our Graphql server
 const httpLink = createHttpLink({
-  uri: `${process.env.VITE_APP_API_URL}`,
+  uri: `${import.meta.env.VITE_APP_API_URL}`,
 })
 const wsLink = new GraphQLWsLink(
-  createClient({ url: `${process.env.VITE_APP_API_WS_URL}` })
+  createClient({ url: `${import.meta.env.VITE_APP_API_WS_URL}` })
 )
 
 // Define Context Header object so that possible token from Firebase is set to the header auth for each request to server
