@@ -9,6 +9,16 @@ export const GET_ALL_PLAYERS = gql`
   }
   ${PLAYER_DETAILS}
 `
+
+export const GET_PLAYER_PROFILE_AUTH = gql`
+  query GetPlayerProfileByAuth($firebaseAuth: String) {
+    GetPlayerProfileByAuth(firebaseAuth: $firebaseAuth) {
+      ...PlayerDetails
+    }
+  }
+  ${PLAYER_DETAILS}
+`
+
 export const GET_PLAYER_PROFILE_BY_NAME = gql`
   query GetPlayerProfileByName($name: String) {
     GetPlayerProfileByName(name: $name) {
