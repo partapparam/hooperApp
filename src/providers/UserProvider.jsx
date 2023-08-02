@@ -18,7 +18,7 @@ export const UserProvider = ({ children }) => {
         // ...
         console.log("uid", uid)
         setIsLoggedIn(true)
-        setUser(user.uid)
+        setUser(uid)
       } else {
         // User is signed out
         // TODO - Handle with RequiredAuth
