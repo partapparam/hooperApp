@@ -2,8 +2,8 @@ import { gql } from "@apollo/client"
 import { PLAYER_DETAILS, GAME_DETAILS } from "./fragments"
 
 export const CREATE_PLAYER = gql`
-  mutation CreatePlayer($firebaseAuth: String!) {
-    CreatePlayer(firebaseAuth: $firebaseAuth) {
+  mutation CreatePlayer($firebaseUID: String!, $phone: String!) {
+    CreatePlayer(firebaseUID: $firebaseUID, phone: $phone) {
       code
       message
       success
@@ -34,14 +34,14 @@ export const UPDATE_PLAYER_PROFILE = gql`
     $first: String!
     $last: String!
     $location: String!
-    $firebaseAuth: String!
+    $firebaseUID: String!
   ) {
     UpdatePlayer(
       username: $username
       first: $first
       last: $last
       location: $location
-      firebaseAuth: $firebaseAuth
+      firebaseUID: $firebaseUID
     ) {
       code
       message

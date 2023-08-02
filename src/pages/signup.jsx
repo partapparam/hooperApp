@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { authentication } from "../firebase/firebase"
 import { memo } from "react"
 import { useAuth } from "../hooks/useAuth"
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
+import { useMutation } from "@apollo/client"
+import { CREATE_PLAYER } from "../graphql/mutations"
 
 const Signup = () => {
   // const navigate = useNavigate()
@@ -11,6 +13,7 @@ const Signup = () => {
   const [OTP, setOTP] = useState("")
   const [expandForm, setExpandForm] = useState(false)
   const { isLoggedIn, user, signout } = useAuth()
+  const [CreatePlayer, { data, loading, error }] = useMutation(CREATE_PLAYER)
 
   const verifyOTP = (event) => {
     let otp = event.target.value
@@ -23,8 +26,11 @@ const Signup = () => {
         .confirm(otp)
         .then((result) => {
           console.log("Sent otp to google")
-          const user = result.user
-          console.log(user)
+          console.log(result.user)
+          const firebaseUID = result.user.uid
+          const phone = result.user.phoneNumber
+          console.log(firebaseUID)
+          CreatePlayer({ variables: { firebaseUID, phone } })
         })
         .catch((err) => {
           console.log(err)

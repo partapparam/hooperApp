@@ -11,8 +11,8 @@ export const GET_ALL_PLAYERS = gql`
 `
 
 export const GET_PLAYER_PROFILE_AUTH = gql`
-  query GetPlayerProfileByAuth($firebaseAuth: String) {
-    GetPlayerProfileByAuth(firebaseAuth: $firebaseAuth) {
+  query GetPlayerProfileByAuth($firebaseUID: String) {
+    GetPlayerProfileByAuth(firebaseUID: $firebaseUID) {
       ...PlayerDetails
     }
   }

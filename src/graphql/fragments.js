@@ -8,9 +8,12 @@ export const PLAYER_DETAILS = gql`
       last
     }
     phone
-    firebaseAuth
-    photoUrl
+    username
+    firebaseUID
+    profilePhoto
     location
+    createdAt
+    updatedAt
   }
 `
 
