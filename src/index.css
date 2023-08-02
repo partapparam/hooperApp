@@ -16,3 +16,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Add default base styles for specific HTML elements */
+  h1 {
+    @apply text-3xl sm:text-4xl font-extrabold;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl font-semibold;
+  }
+
+  h3 {
+    @apply text-xl sm:text-2xl font-bold;
+  }
+}
+
+@layer components {
+  /* A button base shape. */
+  .btn-primary {
+    @apply py-2 px-4 bg-emerald-500 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700;
+  }
+
+  .btn-cancel {
+    @apply py-2 px-4 bg-rose-500 text-white font-semibold rounded-lg shadow-md hover:bg-rose-700;
+  }
+
+  .btn-secondary {
+    @apply py-2 px-4 bg-slate-50 text-gray-900 border-2 border-gray-900 font-semibold rounded-lg shadow-md hover:bg-slate-200;
+  }
+}
