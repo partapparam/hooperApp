@@ -27,10 +27,10 @@ export const UserProvider = ({ children }) => {
     })
   })
 
-  const signout = () => {
+  const logout = () => {
     signOut(authentication)
       .then(() => {
-        console.log("Loogged out")
+        console.log("Logged out")
       })
       .catch((err) => {
         console.log(err)
@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, user, signout }}>
+    <UserContext.Provider value={{ isLoggedIn, user, logout }}>
       {children}
     </UserContext.Provider>
   )

@@ -1,21 +1,25 @@
 import React from "react"
-import Signup from "./pages/signup"
-import { PlayerProfile } from "./pages/playerProfile"
+import { PlayerProfile } from "./pages/PlayerProfile"
 import { BrowserRouter as Router } from "react-router-dom"
 import { Routes, Route } from "react-router-dom"
 import { UserProvider } from "./providers/UserProvider"
+import { NavBar } from "./components/NavigationBar"
+import Signin from "./pages/Signin"
+import { Home } from "./pages/Home"
 
 function App() {
   return (
     <Router>
       <UserProvider>
-        <Routes>
-          {" "}
-          <Route path="/" element={<Signup />} />
-          <Route path="/profile" element={<PlayerProfile />} />
-          {/* <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} /> */}
-        </Routes>
+        <NavBar />
+        <div className="m-3 bg-purple-500 p-3">
+          <Routes>
+            {" "}
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<PlayerProfile />} />
+            <Route path="/login" element={<Signin />} />
+          </Routes>
+        </div>
       </UserProvider>
     </Router>
   )
