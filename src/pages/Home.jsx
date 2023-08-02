@@ -1,7 +1,8 @@
 import React from "react"
 import { useQuery } from "@apollo/client"
-import { GET_ALL_GAMES } from "../graphql/queries"
+import { GET_ALL_GAMES, GET_ALL_PLAYERS } from "../graphql/queries"
 import { LoadingSpinner } from "../components/LoadingSpinner"
+import { GamesList } from "../components/GamesList"
 
 export const Home = () => {
   const { loading, error, data } = useQuery(GET_ALL_GAMES)
@@ -18,14 +19,14 @@ export const Home = () => {
     return <div className="bg-red-400 p-10">Error</div>
   }
 
+  if (data) {
+    console.log(data)
+  }
+
   return (
     <div>
-      {data &&
-        data.games &&
-        data.games.map((game) => {
-          return <div key={game.gameId}>{game.gameId}</div>
-        })}
-      {data && !data.games && <div>Nothing to Show</div>}
+      {data && data.GetAllGames && <GamesList games={data.GetAllGames} />}
+      {data && !data.GetAllGames && <div>Nothing to Show</div>}
     </div>
   )
 }

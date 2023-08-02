@@ -82,7 +82,7 @@ export const NavBar = () => {
               {!isLoggedIn && (
                 <>
                   <p className="text-gray-100 hover:bg-violet-400 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
-                    <Link to="/signip">
+                    <Link to="/signin">
                       <span>Sign In</span>
                     </Link>
                   </p>
