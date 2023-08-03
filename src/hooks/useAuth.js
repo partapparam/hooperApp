@@ -3,6 +3,6 @@ import { UserContext } from "../providers/UserProvider"
 import { useContext, useEffect } from "react"
 
 export const useAuth = () => {
-  const { isLoggedIn, user, signout } = useContext(UserContext)
-  return { isLoggedIn, user, signout }
+  const { isLoggedIn, firebaseUser, signout } = useContext(UserContext)
+  return { isLoggedIn, firebaseUser, signout }
 }

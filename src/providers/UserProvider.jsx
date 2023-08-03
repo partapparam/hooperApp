@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState, createContext } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { authentication } from "../firebase/firebase"
@@ -8,24 +8,29 @@ export const UserContext = createContext()
 
 export const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [user, setUser] = useState(() => {
-    onAuthStateChanged(authentication, (user) => {
-      if (user) {
-        console.log(user)
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid
-        // ...
-        console.log("uid", uid)
-        setIsLoggedIn(true)
-        setUser(uid)
-      } else {
-        // User is signed out
-        // TODO - Handle with RequiredAuth
-        console.log("No user is logged in")
-      }
-    })
-  })
+  const [firebaseUser, setFirebaseUser] = useState(null)
+
+  useEffect(() => {
+    const authorize = async () => {
+      await onAuthStateChanged(authentication, (user) => {
+        if (user) {
+          // console.log(user)
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const uid = user.uid
+          // ...
+          setIsLoggedIn(true)
+          setFirebaseUser(user.uid)
+        } else {
+          // User is signed out
+          // TODO - Handle with RequiredAuth
+          console.log("No user is logged in")
+        }
+      })
+    }
+
+    authorize()
+  }, [])
 
   const logout = () => {
     signOut(authentication)
@@ -38,7 +43,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, user, logout }}>
+    <UserContext.Provider value={{ isLoggedIn, firebaseUser, logout }}>
       {children}
     </UserContext.Provider>
   )

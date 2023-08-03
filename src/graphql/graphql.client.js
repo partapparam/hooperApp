@@ -20,7 +20,7 @@ const wsLink = new GraphQLWsLink(
 
 // Define Context Header object so that possible token from Firebase is set to the header auth for each request to server
 const authLink = setContext(async (_, { headers }) => {
-  const user = authentication.currentUser
+  const user = await authentication.currentUser
   const token = user && (await user.getIdToken())
   console.log("here is token from firebase", token)
   return {
