@@ -10,7 +10,7 @@ export const GET_ALL_PLAYERS = gql`
   ${PLAYER_DETAILS}
 `
 
-export const GET_PLAYER_PROFILE_AUTH = gql`
+export const GET_PLAYER_PROFILE_BY_AUTH = gql`
   query GetPlayerProfileByAuth($firebaseUID: String) {
     GetPlayerProfileByAuth(firebaseUID: $firebaseUID) {
       ...PlayerDetails

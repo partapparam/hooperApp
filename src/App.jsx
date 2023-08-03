@@ -6,6 +6,7 @@ import { UserProvider } from "./providers/UserProvider"
 import { NavBar } from "./components/NavigationBar"
 import Signin from "./pages/Signin"
 import { Home } from "./pages/Home"
+import { EditProfile } from "./pages/EditProfile"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<PlayerProfile />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/profile/edit" element={<EditProfile />}></Route>
           </Routes>
         </div>
       </UserProvider>
