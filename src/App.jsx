@@ -7,6 +7,9 @@ import { NavBar } from "./components/NavigationBar"
 import Signin from "./pages/Signin"
 import { Home } from "./pages/Home"
 import { EditProfile } from "./pages/EditProfile"
+import { CreateGame } from "./pages/CreateGame"
+import { SearchPlayers } from "./components/SearchPlayer"
+import { NewGameForm } from "./components/NewGameForm"
 
 function App() {
   return (
@@ -20,6 +23,10 @@ function App() {
             <Route path="/profile" element={<PlayerProfile />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/profile/edit" element={<EditProfile />}></Route>
+            <Route path="/game/create" element={<CreateGame />}>
+              <Route path="form" element={<NewGameForm />} />
+              <Route index element={<SearchPlayers />} />
+            </Route>
           </Routes>
         </div>
       </UserProvider>
