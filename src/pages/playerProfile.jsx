@@ -4,14 +4,14 @@ import { useQuery } from "@apollo/client"
 import { GET_PLAYER_PROFILE_BY_AUTH } from "../graphql/queries"
 import { LoadingSpinner } from "../components/LoadingSpinner"
 import { ErrorMessage } from "../components/ErrorMessage"
+import { Link } from "react-router-dom"
 
 export const PlayerProfile = () => {
   const { firebaseUser } = useAuth()
-  console.log(firebaseUser)
   const { loading, error, data } = useQuery(GET_PLAYER_PROFILE_BY_AUTH, {
     variables: { firebaseUID: firebaseUser },
   })
-  let response = null
+  let playerProfileData = null
 
   if (loading) {
     return (
@@ -26,17 +26,23 @@ export const PlayerProfile = () => {
   }
 
   if (data) {
-    console.log(data)
-    response = data.GetPlayerProfileByAuth
+    playerProfileData = data.GetPlayerProfileByAuth
   }
 
   return (
     <>
-      {response && (
+      {playerProfileData && (
         <div>
           <h1>Profile Page</h1>
-          <h2>{response.firebaseUID}</h2>
-          <p>{response.phone}</p>
+          <h2>
+            {playerProfileData.name.first} {playerProfileData.name.last}
+          </h2>
+          <p>{playerProfileData.phone}</p>
+          {playerProfileData.firebaseUID === firebaseUser ? (
+            <button className="btn-secondary">
+              <Link to="/profile/edit">Edit Profile</Link>
+            </button>
+          ) : null}
         </div>
       )}
     </>

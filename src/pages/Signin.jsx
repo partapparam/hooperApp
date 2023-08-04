@@ -110,31 +110,26 @@ const Signup = () => {
               </div>
               {expandForm === true ? (
                 <>
-                  <div className="p-2 bg-red-200">
-                    <label htmlFor="otpInput">OTP</label>
+                  <div className="p-3 border-2 border-purple-800 bg-violet-300">
+                    <label htmlFor="otpInput" className="text-black font-bold">
+                      Check your phone and please enter the one time pin.
+                    </label>
                     <input
                       type="number"
                       id="otpInput"
                       value={OTP}
                       onChange={verifyOTP}
                     />
-                    <div id="otpHelp">Please enter the one time pin</div>
                   </div>
                 </>
               ) : null}
               {expandForm === false ? (
-                <button type="submit">Request OTP</button>
+                <button type="submit" className="btn-secondary">
+                  Request OTP
+                </button>
               ) : null}
               <div id="sign-in-button"></div>
-              {/* <button type="submit" onClick={onSubmit}>
-                Sign up
-              </button> */}
             </form>
-
-            <p>
-              <button onClick={signOutUser}>sign out</button>
-              Already have an account? <NavLink to="/login">Sign in</NavLink>
-            </p>
           </div>
         </div>
       </section>

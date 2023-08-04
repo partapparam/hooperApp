@@ -22,7 +22,7 @@ const wsLink = new GraphQLWsLink(
 const authLink = setContext(async (_, { headers }) => {
   const user = await authentication.currentUser
   const token = user && (await user.getIdToken())
-  console.log("here is token from firebase", token)
+  console.log("here is token from firebase")
   return {
     headers: {
       ...headers,

@@ -8,7 +8,9 @@ export const UserContext = createContext()
 
 export const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [firebaseUser, setFirebaseUser] = useState(null)
+  const [firebaseUser, setFirebaseUser] = useState(() => {
+    return localStorage.getItem("firebaseUser")
+  })
 
   useEffect(() => {
     const authorize = async () => {
@@ -21,6 +23,7 @@ export const UserProvider = ({ children }) => {
           // ...
           setIsLoggedIn(true)
           setFirebaseUser(user.uid)
+          localStorage.setItem("firebaseUser", uid)
         } else {
           // User is signed out
           // TODO - Handle with RequiredAuth
@@ -36,6 +39,8 @@ export const UserProvider = ({ children }) => {
     signOut(authentication)
       .then(() => {
         console.log("Logged out")
+        localStorage.removeItem("firebaseUser")
+        setIsLoggedIn(false)
       })
       .catch((err) => {
         console.log(err)

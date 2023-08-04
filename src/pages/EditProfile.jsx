@@ -1,38 +1,78 @@
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useAuth } from "../hooks/useAuth"
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import { GET_PLAYER_PROFILE_BY_AUTH } from "../graphql/queries"
 import { LoadingSpinner } from "../components/LoadingSpinner"
 import { ErrorMessage } from "../components/ErrorMessage"
+import { UPDATE_PLAYER_PROFILE } from "../graphql/mutations"
+import { useNavigate } from "react-router-dom"
+
+let renderCount = 0
 
 export const EditProfile = () => {
   const { firebaseUser } = useAuth()
-  console.log(firebaseUser)
+  const navigate = useNavigate()
+  const [updatePlayer] = useMutation(UPDATE_PLAYER_PROFILE, {
+    onError: (error) => {
+      const message = error.graphQLErrors[0].message
+      console.log(message)
+    },
+    onCompleted: () => {
+      console.log("Mutation is complete, so we navigate")
+      handleReset()
+    },
+  })
   let response = null
   const { loading, error, data } = useQuery(GET_PLAYER_PROFILE_BY_AUTH, {
     variables: { firebaseUID: firebaseUser },
   })
-  if (data) {
-    response = data.GetPlayerProfileByAuth
-    console.log(response)
-  }
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({})
+  } = useForm({
+    defaultValues: {
+      first: "",
+      last: "",
+      location: "",
+      username: "",
+    },
+  })
+
+  useEffect(() => {
+    let defaultValues = {}
+    if (response && response.name.first && response.name.last) {
+      defaultValues.first = response.name.first
+      defaultValues.last = response.name.last
+      defaultValues.location = response.location
+      defaultValues.username = response.username
+      reset({ ...defaultValues })
+    }
+  }, [response, reset])
 
   const onSubmit = async (data) => {
-    console.log(data)
+    console.log("onsubmit called")
+    updatePlayer({
+      variables: {
+        first: data.first,
+        last: data.last,
+        location: data.location,
+        username: data.username,
+        firebaseUID: firebaseUser,
+      },
+    })
   }
 
   const handleReset = () => {
+    console.log("calling reset")
     reset()
+    navigate("/profile")
   }
 
   if (loading) {
+    console.log("loading called")
     return (
       <div>
         <LoadingSpinner />
@@ -40,16 +80,28 @@ export const EditProfile = () => {
     )
   }
   if (error) {
+    console.log("error called")
     return <ErrorMessage message={"Could not Load"} status={"404"} />
   }
+  if (data) {
+    console.log("setting data")
+    response = data.GetPlayerProfileByAuth
+    // response.name.first != null ? setValue("first", response.name.first) : null
+    // response.name.last != null ? setValue("last", response.name.last) : null
+    // response.location != null ? setValue("location", response.location) : null
+    // response.username != null ? setValue("username", response.username) : null
+  }
+
+  renderCount++
 
   return (
     <>
       <h1>Edit Profile</h1>
+      <p className="p-3 bg-red-500">{renderCount}</p>
       {response && (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid gap-6 mb-6 md:grid-cols-2"
+          className="grid gap-6 mb-6 w-3/4 sm:w-1/2"
         >
           <div>
             <label htmlFor="first">First Name</label>
@@ -76,6 +128,18 @@ export const EditProfile = () => {
             )}
           </div>
           <div>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              {...register("username", { required: "Please enter a username" })}
+            />
+            {errors.last?.type === "required" && (
+              <p className="form-input-error" role="alert">
+                {errors.username?.message}
+              </p>
+            )}
+          </div>
+          <div>
             <label htmlFor="location">Location</label>
             <input
               type="text"
@@ -89,6 +153,16 @@ export const EditProfile = () => {
                 {errors.location?.message}
               </p>
             )}
+          </div>
+          <div>
+            <input type="submit" className="btn-primary" />
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={handleReset}
+            >
+              Cancel
+            </button>
           </div>
         </form>
       )}

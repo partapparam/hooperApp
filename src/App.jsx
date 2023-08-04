@@ -13,7 +13,7 @@ function App() {
     <Router>
       <UserProvider>
         <NavBar />
-        <div className="m-3 bg-purple-500 p-3">
+        <div className="m-3 bg-purple-800 p-3">
           <Routes>
             {" "}
             <Route path="/" element={<Home />} />
