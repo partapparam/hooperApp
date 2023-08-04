@@ -7,20 +7,20 @@ import { LoadingSpinner } from "./LoadingSpinner"
 let renderCount = 0
 
 export const SearchPlayers = () => {
-  const [getSearch, { loading, error, data }] = useLazyQuery(SEARCH_PLAYERS, {
-    onCompleted: () => {
-      console.log(data)
-      setResults(data.SearchPlayers)
-    },
-    onError: (error) => console.log("graph QL eror", error),
-  })
   const [search, setSearch] = useState("")
   const [results, setResults] = useState([])
   const [showResults, setShowResults] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const resultsContainer = useRef(null)
+  const [getSearch, { loading, error, data }] = useLazyQuery(SEARCH_PLAYERS, {
+    onCompleted: () => {
+      console.log("OnCompleted")
+    },
+    onError: (error) => console.log("graph QL eror", error),
+  })
 
   const debouncedRequest = useDebounce(() => {
+    console.log("running debounced request")
     getSearch({ variables: { searchTerm: search } })
   })
 
@@ -53,12 +53,14 @@ export const SearchPlayers = () => {
   const onChange = (e) => {
     const query = e.target.value
     console.log("current query value = ", query)
-    if (query === "" || query === null) {
-      setResults([])
-      return
-    }
     setSearch(query)
-    debouncedRequest()
+    if (query == "" || query == null) {
+      setResults([])
+      console.log("set results to nothing")
+    } else {
+      console.log("about to call debounce")
+      debouncedRequest()
+    }
   }
 
   if (loading) {
@@ -66,6 +68,15 @@ export const SearchPlayers = () => {
     console.log("loading")
     // return <LoadingSpinner />
   }
+  if (error) {
+    console.log("Error from GQL,", error)
+  }
+  useEffect(() => {
+    if (!loading && data) {
+      console.log("here is data = ", data)
+      setResults(data.SearchPlayers)
+    }
+  }, [loading, data])
 
   return (
     <div className=" w-full px-3 md:px-0">
