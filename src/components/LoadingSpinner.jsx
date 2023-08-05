@@ -1,6 +1,6 @@
 import React from "react"
 
-export const LoadingSpinner = () => {
+export const LoadingSpinner = ({ message }) => {
   return (
     <div
       role="status"
@@ -22,7 +22,8 @@ export const LoadingSpinner = () => {
           fill="currentFill"
         />
       </svg>
-      <span className="sr-only">Loading...</span>
+      <span className="sr-only">Loading {message}...</span>
+      <span>Loading {message}...</span>
     </div>
   )
 }

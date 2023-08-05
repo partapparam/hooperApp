@@ -96,25 +96,27 @@ export const SearchPlayers = () => {
         />
         {/* search results container */}
         {showResults && results && results.length !== 0 && (
-          <div className="absolute text-md text-black text-left w-full p-2 bg-white shadow-sm rounded-bl rounded-br max-h-56 overflow-y-auto">
-            {results &&
-              results.map((player, index) => {
-                return (
-                  <div
-                    key={index}
-                    onMouseDown={() => handleSelection(index)}
-                    ref={index === focusedIndex ? resultsContainer : null}
-                    className="cursor-pointer hover:bg-violet-300 p-2"
-                    style={{
-                      backgroundColor: index === focusedIndex ? "#93c5fd" : "",
-                    }}
-                  >
-                    {player.name.first}
-                  </div>
-                )
-              })}
-          </div>
+          <>
+            <h3>Players</h3>
+            <div className="absolute text-md text-black text-left w-full m-1 p-2 bg-white shadow-sm rounded max-h-56 overflow-y-auto">
+              {results &&
+                results.map((player, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="cursor-pointer hover:bg-violet-300 p-2"
+                    >
+                      <p className="text-lg">
+                        {player.name.first} {player.name.last}
+                      </p>
+                      <p className="text-xs">{player.location}</p>
+                    </div>
+                  )
+                })}
+            </div>
+          </>
         )}
+        {loading && <LoadingSpinner message="players" />}
       </div>
     </div>
   )
