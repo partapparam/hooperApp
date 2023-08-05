@@ -13,7 +13,12 @@ const Signup = () => {
   const [OTP, setOTP] = useState("")
   const [expandForm, setExpandForm] = useState(false)
   const { isLoggedIn, user, signout } = useAuth()
-  const [CreatePlayer, { data, loading, error }] = useMutation(CREATE_PLAYER)
+  const [CreatePlayer, { data, loading, error }] = useMutation(CREATE_PLAYER, {
+    onCompleted: (data) => {
+      console.log(data)
+      localStorage.setItem("user", data.CreatePlayer.player.id)
+    },
+  })
 
   const verifyOTP = (event) => {
     let otp = event.target.value
