@@ -10,26 +10,29 @@ import { EditProfile } from "./pages/EditProfile"
 import { CreateGame } from "./pages/CreateGame"
 import { SearchPlayers } from "./components/SearchPlayer"
 import { NewGameForm } from "./components/NewGameForm"
+import { ToastProvider } from "./providers/ToastProvider"
 
 function App() {
   return (
     <Router>
-      <UserProvider>
-        <NavBar />
-        <div className="m-3 bg-purple-800 p-3">
-          <Routes>
-            {" "}
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<PlayerProfile />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/profile/edit" element={<EditProfile />}></Route>
-            <Route path="/game/create" element={<CreateGame />}>
-              <Route path="form" element={<NewGameForm />} />
-              <Route index element={<SearchPlayers />} />
-            </Route>
-          </Routes>
-        </div>
-      </UserProvider>
+      <ToastProvider>
+        <UserProvider>
+          <NavBar />
+          <div className="m-3 bg-purple-800 p-3">
+            <Routes>
+              {" "}
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<PlayerProfile />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/profile/edit" element={<EditProfile />}></Route>
+              <Route path="/game/create" element={<CreateGame />}>
+                <Route path="form" element={<NewGameForm />} />
+                <Route index element={<SearchPlayers />} />
+              </Route>
+            </Routes>
+          </div>
+        </UserProvider>
+      </ToastProvider>
     </Router>
   )
 }

@@ -6,17 +6,20 @@ import { useAuth } from "../hooks/useAuth"
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
 import { useMutation } from "@apollo/client"
 import { CREATE_PLAYER } from "../graphql/mutations"
+import { useToast } from "../hooks/useToast"
 
 const Signup = () => {
   const navigate = useNavigate()
   const [phoneNumber, setPhoneNumber] = useState("")
   const [OTP, setOTP] = useState("")
+  const toast = useToast()
   const [expandForm, setExpandForm] = useState(false)
   const { isLoggedIn, user, signout } = useAuth()
   const [CreatePlayer, { data, loading, error }] = useMutation(CREATE_PLAYER, {
     onCompleted: (data) => {
       console.log(data)
       localStorage.setItem("user", data.CreatePlayer.player.id)
+      toast.open("Welcome to Hooper", "success")
     },
   })
 

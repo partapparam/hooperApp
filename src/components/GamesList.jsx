@@ -8,9 +8,10 @@ export const GamesList = ({ games }) => {
     <div className="p-5">
       <div className="flex justify-between">
         <h1 className="text-white">Games</h1>
-        <button className="btn-secondary">
-          <Link to="/game/create">New</Link>
-        </button>
+
+        <Link to="/game/create">
+          <button className="btn-secondary">New</button>
+        </Link>
       </div>
       {games &&
         games.map((game) => {
