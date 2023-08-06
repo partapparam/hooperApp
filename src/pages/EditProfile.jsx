@@ -86,10 +86,6 @@ export const EditProfile = () => {
   if (data) {
     console.log("setting data")
     response = data.GetPlayerProfileByAuth
-    // response.name.first != null ? setValue("first", response.name.first) : null
-    // response.name.last != null ? setValue("last", response.name.last) : null
-    // response.location != null ? setValue("location", response.location) : null
-    // response.username != null ? setValue("username", response.username) : null
   }
 
   renderCount++

@@ -10,12 +10,13 @@ export const Home = () => {
   if (loading) {
     return (
       <div>
-        <LoadingSpinner />
+        <LoadingSpinner message={"loading games"} />
       </div>
     )
   }
 
   if (error) {
+    console.log(error)
     return <div className="bg-red-400 p-10">Error</div>
   }
 

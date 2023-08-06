@@ -5,8 +5,6 @@ import { useDebounce } from "../hooks/useDebounce"
 import { LoadingSpinner } from "./LoadingSpinner"
 import { Link } from "react-router-dom"
 
-let renderCount = 0
-
 export const SearchPlayers = () => {
   const [search, setSearch] = useState("")
   const [results, setResults] = useState([])
@@ -41,7 +39,7 @@ export const SearchPlayers = () => {
   }
 
   if (loading) {
-    renderCount++
+    // renderCount++
     console.log("loading")
     // return <LoadingSpinner />
   }
@@ -57,7 +55,7 @@ export const SearchPlayers = () => {
 
   return (
     <div className=" w-full px-3 md:px-0">
-      <button className="btn-cancel">{renderCount}</button>
+      {/* <button className="btn-cancel">{renderCount}</button> */}
       <div tabIndex={1} className="relative">
         <input
           className="w-full !px-6 py-3 rounded-sm text-md  focus:shadow-sm border-4 border-violet-300 focus:border-violet-500 duration-400 transition"

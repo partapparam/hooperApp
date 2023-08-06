@@ -2,7 +2,7 @@ import React from "react"
 
 export const GameCard = ({ game }) => {
   return (
-    <div className="flex flex-col sm:flex-row p-3 my-5 shadow-xl items-center	justify-center text-center bg-slate-100 text-black">
+    <div className="flex flex-col sm:flex-row p-3 my-5 shadow-xl items-center	justify-center text-center bg-slate-100 rounded hover:bg-yellow-100 text-black">
       <div className="p-2">
         <h3>Home Team</h3>
         <p>Score: {game.score.home}</p>

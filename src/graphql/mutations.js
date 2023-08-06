@@ -60,12 +60,18 @@ export const CREATE_GAME = gql`
     $awayTeam: [String]!
     $homeTeam: [String]!
     $createdByPlayerId: String!
+    $home: Int
+    $away: Int
+    $winningTeam: String
   ) {
     CreateGame(
       playerCount: $playerCount
       awayTeam: $awayTeam
       homeTeam: $homeTeam
       createdByPlayerId: $createdByPlayerId
+      home: $home
+      away: $away
+      winningTeam: $winningTeam
     ) {
       code
       message
