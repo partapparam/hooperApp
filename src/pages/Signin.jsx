@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import React from "react"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { authentication } from "../firebase/firebase"
 import { memo } from "react"
 import { useAuth } from "../hooks/useAuth"

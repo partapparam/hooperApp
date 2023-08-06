@@ -40,6 +40,8 @@ export const UserProvider = ({ children }) => {
       .then(() => {
         console.log("Logged out")
         localStorage.removeItem("firebaseUser")
+        localStorage.removeItem("user")
+
         setIsLoggedIn(false)
       })
       .catch((err) => {
