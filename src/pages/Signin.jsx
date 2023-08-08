@@ -8,6 +8,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
 import { useMutation } from "@apollo/client"
 import { CREATE_PLAYER } from "../graphql/mutations"
 import { useToast } from "../hooks/useToast"
+import PhoneInput from "react-phone-number-input/input"
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -67,6 +68,7 @@ const Signup = () => {
 
   const requestOTP = (event) => {
     event.preventDefault()
+
     if (phoneNumber.length >= 10) {
       setExpandForm(true)
       if (!window.recaptchaVerifier) {
@@ -84,9 +86,9 @@ const Signup = () => {
     }
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    setPhoneNumber(event.target.value)
+  const handleSubmit = (number) => {
+    console.log(number)
+    setPhoneNumber(number)
   }
 
   useEffect(() => {
@@ -95,10 +97,6 @@ const Signup = () => {
       console.log(user)
     }
   }, [isLoggedIn, user])
-
-  const signOutUser = () => {
-    signout()
-  }
 
   return (
     <div>
@@ -110,11 +108,12 @@ const Signup = () => {
               <h1>Sign in with phone Number</h1>
               <div className="m-2">
                 <label htmlFor="phoneNumberInput">Phone</label>
-                <input
-                  type="tel"
+                <PhoneInput
+                  placeholder="please enter your phone number"
                   id="phoneNumberInput"
                   value={phoneNumber}
                   onChange={handleSubmit}
+                  defaultCountry="US"
                 />
               </div>
               {expandForm === true ? (
