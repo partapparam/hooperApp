@@ -87,7 +87,7 @@ const Signup = () => {
   }
 
   const handleSubmit = (number) => {
-    console.log(number)
+    // console.log(number)
     setPhoneNumber(number)
   }
 

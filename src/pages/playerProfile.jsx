@@ -31,20 +31,22 @@ export const PlayerProfile = () => {
 
   return (
     <>
+      <h1>Profile Page</h1>
       {playerProfileData && (
         <div>
-          <h1>Profile Page</h1>
           <h2>
             {playerProfileData.name.first} {playerProfileData.name.last}
           </h2>
           <p>{playerProfileData.phone}</p>
-          {playerProfileData.firebaseUID === firebaseUser ? (
-            <button className="btn-secondary">
-              <Link to="/profile/edit">Edit Profile</Link>
-            </button>
-          ) : null}
         </div>
       )}
+      <div>
+        {playerProfileData.firebaseUID === firebaseUser ? (
+          <button className="btn-secondary">
+            <Link to="/profile/edit">Edit Profile</Link>
+          </button>
+        ) : null}
+      </div>
     </>
   )
 }
