@@ -23,8 +23,8 @@ export const GamesList = ({ games }) => {
           return (
             <div key={game.id}>
               <motion.div
-                initial="hidden"
-                whileInView="visible"
+                initial={{ opacity: 0.5 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
               >
                 <GameCard key={game.id} game={game} />
