@@ -2,6 +2,7 @@ import React from "react"
 import { GameCard } from "./GameCard"
 import { Link } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
+import { motion } from "framer-motion"
 
 export const GamesList = ({ games }) => {
   const { isLoggedIn } = useAuth()
@@ -19,7 +20,17 @@ export const GamesList = ({ games }) => {
       </div>
       {games &&
         games.map((game) => {
-          return <GameCard key={game.id} game={game} />
+          return (
+            <div key={game.id}>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                <GameCard key={game.id} game={game} />
+              </motion.div>
+            </div>
+          )
         })}
     </div>
   )
