@@ -23,7 +23,7 @@ export const TextScroll = ({ children, baseVelocity }) => {
     damping: 50,
     stiffness: 400,
   })
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+  const velocityFactor = useTransform(smoothVelocity, [0, 100], [10, 25], {
     clamp: false,
   })
 
@@ -32,11 +32,11 @@ export const TextScroll = ({ children, baseVelocity }) => {
    * have to replace for wrapping that works for you or dynamically
    * calculate
    */
-  const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`)
+  const x = useTransform(baseX, (v) => `${wrap(-10, -35, v)}%`)
 
   const directionFactor = useRef(1)
   useAnimationFrame((t, delta) => {
-    let moveBy = directionFactor.current * baseVelocity * (delta / 1000)
+    let moveBy = directionFactor.current * baseVelocity * (delta / 7000)
 
     /**
      * This is what changes the direction of the scroll once we
@@ -50,7 +50,7 @@ export const TextScroll = ({ children, baseVelocity }) => {
 
     moveBy += directionFactor.current * moveBy * velocityFactor.get()
 
-    baseX.set(baseX.get() + moveBy)
+    baseX.set(baseX.get() + moveBy / 3)
   })
 
   /**
@@ -63,10 +63,12 @@ export const TextScroll = ({ children, baseVelocity }) => {
   return (
     <div className="overflow-hidden whitespace-nowrap flex flex-nowrap">
       <motion.div
-        className="uppercase flex flex-nowrap whitespace-nowrap text-4xl font-extrabold"
+        className="uppercase flex flex-nowrap whitespace-nowrap text-4xl font-extrabold text-right"
         style={{ x }}
       >
-        <span className="block mr-3">{children} </span>
+        <span className="block mr-3">{children}</span>
+        <span className="block mr-3">{children}</span>
+        <span className="block mr-3">{children}</span>
       </motion.div>
     </div>
   )
