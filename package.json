@@ -13,6 +13,7 @@
     "@apollo/client": "^3.7.17",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
+    "@motionone/utils": "^10.16.3",
     "axios": "^1.4.0",
     "firebase": "^9.23.0",
     "framer-motion": "^10.16.4",
