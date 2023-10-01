@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client"
 import { GET_ALL_GAMES, GET_ALL_PLAYERS } from "../graphql/queries"
 import { LoadingSpinner } from "../components/LoadingSpinner"
 import { GamesList } from "../components/GamesList"
+import { HomeBanner } from "../components/HomeBanner"
 
 export const Home = () => {
   const { loading, error, data } = useQuery(GET_ALL_GAMES)
@@ -26,8 +27,8 @@ export const Home = () => {
 
   return (
     <div>
+      <HomeBanner />
       {data && data.GetAllGames && <GamesList games={data.GetAllGames} />}
-      {data && !data.GetAllGames && <div>Nothing to Show</div>}
     </div>
   )
 }

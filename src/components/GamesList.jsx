@@ -2,7 +2,14 @@ import React from "react"
 import { GameCard } from "./GameCard"
 import { Link } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
+import { useEffect } from "react"
+import { Reveal } from "./transitions/Reveal"
+
+// interface Props {
+//   children: JSX.Element;
+//   width?: "fit-content" | "100%";
+// }
 
 export const GamesList = ({ games }) => {
   const { isLoggedIn } = useAuth()
@@ -21,15 +28,9 @@ export const GamesList = ({ games }) => {
       {games &&
         games.map((game) => {
           return (
-            <div key={game.id}>
-              <motion.div
-                initial={{ opacity: 0.5 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-              >
-                <GameCard key={game.id} game={game} />
-              </motion.div>
-            </div>
+            <Reveal key={game.id} width="fit-content">
+              <GameCard key={game.id} game={game} />
+            </Reveal>
           )
         })}
     </div>
