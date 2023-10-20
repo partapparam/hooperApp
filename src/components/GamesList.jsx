@@ -13,7 +13,6 @@ import { Reveal } from "./transitions/Reveal"
 
 export const GamesList = ({ games }) => {
   const { isLoggedIn } = useAuth()
-  console.log(games)
   return (
     <div className="p-5">
       <div className="flex justify-between">
